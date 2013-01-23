@@ -1,5 +1,6 @@
 // init the test client
- 
+require("../test_helper.js");
+
 describe('service: /notes', function() {
  
     // Test #1

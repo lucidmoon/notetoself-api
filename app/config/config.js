@@ -22,4 +22,4 @@ var Config = function () {
     }
 }();
 
-exports.module = exports = Config;
+module.exports = exports = Config;

@@ -1,11 +1,14 @@
 var Server = function() {
+
+    //  Check for NODE_ENV environment variable or set a default
+    var NODE_ENV = process.env.NODE_ENV || "development";
+
     //  Set up module dependencies.
-    
     var _ = require('lodash'),
         config = require('./app/config/config'),
         restify = require('restify'),  
         mongoose = require('mongoose'),
-        db = mongoose.connect(config.app.mongoose[process.env.NODE_ENV].connectionString),
+        db = mongoose.connect(config.mongoose[NODE_ENV].connectionString),
         notesController = require("./app/controllers/notes");
 
     //  Create, pre-configure and return an instance of a Restify application.
@@ -46,14 +49,14 @@ var Server = function() {
 
     //  Initialise and pre-configure a restify server instance.
     var server = createServer({
-        'name': config.app.name
+        'name': config.name
     });
 
     //  Return a facade.
     return {
         start: function() {
             // Start server listening on specified port.
-            server.listen(config.app.port, function(req, res) {
+            server.listen(config.port, function(req, res) {
                 console.log('%s listening at %s', server.name, server.url);
             });        
         },

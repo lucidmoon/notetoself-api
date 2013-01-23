@@ -70,6 +70,7 @@ var Notes = function () {
         }
     };
 
+    // Return a facade.
     return {
         "get": _get,
         "post": _post,
