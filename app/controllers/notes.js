@@ -13,7 +13,11 @@ var Notes = function () {
     function _get (req, res, next) {
         if (req.params.id) {
             Note.findOne({'_id':req.params.id}).execFind(function (arr, data) {
-                res.send(data);
+                if (data) {
+                    res.send(data);
+                } else {
+                    res.send(404);
+                }
             });
             return;
         } else {

@@ -1,6 +1,6 @@
 var Server = function() {
 
-    //  Check for NODE_ENV environment variable or set a default
+    //  Check for NODE_ENV environment variable or set a sensible default.
     var NODE_ENV = process.env.NODE_ENV || "development";
 
     //  Set up module dependencies.
@@ -30,11 +30,11 @@ var Server = function() {
             // Intercept the OPTIONS method.
             if ('OPTIONS' == req.method) {
               res.send(200);
-          }
-          else {
+            } else {
               next();
-          }
-      });    
+            }
+
+        });    
 
         //  Configure Routes.
         app.get('/notes/:id', notesController.get);
@@ -57,7 +57,9 @@ var Server = function() {
         start: function() {
             // Start server listening on specified port.
             server.listen(config.port, function(req, res) {
-                console.log('%s listening at %s', server.name, server.url);
+                if (NODE_ENV === 'development') {
+                    console.log('%s listening at %s', server.name, server.url);    
+                } 
             });        
         },
         stop: function() {
