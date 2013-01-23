@@ -1,8 +1,16 @@
-var Note = require('../models/note');
+//     NoteToSelf API 
+//     (c) 2012-2013 Matt Richards, Lucidmoon Ltd
+//     http://lucidmoon.co.uk
+//     -----
 
-var controller = {
-    // GET: /notes/:id
-    "get": function (req, res, next) {
+//  Notes Controller.
+var Notes = function () {
+
+    //  Note model module dependency.     
+    var Note = require('../../core/models/note');
+
+    // GET route handler.
+    function _get (req, res, next) {
         if (req.params.id) {
             Note.findOne({'_id':req.params.id}).execFind(function (arr, data) {
                 res.send(data);
@@ -13,10 +21,10 @@ var controller = {
                 res.send(data);
             });
         }        
-    },
+    };
 
-    // POST: /notes
-    "post": function (req, res, next) {
+    // POST route handler.
+    function _post (req, res, next) {
         var note = new Note();
         note.title = req.params.title;
         note.context = req.params.context;
@@ -29,10 +37,10 @@ var controller = {
         note.save(function () {
             res.send(req.body);
         });
-    },
+    };
 
-    // PUT: /notes/:id
-    "put": function (req, res, next) {
+    // PUT route handler.
+    function _put (req, res, next) {
         Note.findOne({'_id':req.params.id}).execFind(function (arr, model) {
             model.title = req.params.title;
             model.context = req.params.context;
@@ -46,10 +54,10 @@ var controller = {
                 res.send(req.body);
             });
         });
-    },
+    };
 
-    // DELETE: /notes/:id
-    "del": function (req, res, next) {
+    // DELETE route handler.
+    function _del (req, res, next) {
         if (req.param('id')) {
             console.log(req.param('id'));
             Note.remove(req.param('id'), function (err) {
@@ -60,7 +68,14 @@ var controller = {
         } else {
             res.send(501);
         }
-    }
-};
+    };
 
-module.exports = exports = controller;
+    return {
+        "get": _get,
+        "post": _post,
+        "put": _put,
+        "del": _del
+    }
+}();
+
+module.exports = exports = Notes;

@@ -4,6 +4,8 @@
 	"dependencies" : {
 		"restify": "2.x",
 		"mongoose": "3.x",
-		"lodash": "1.x"
+		"lodash": "1.x",
+		"mocha": "*",
+		"chai": "*"
 	} 
 }
